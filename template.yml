@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Canary DotNetCore 2.0 Serverless Application Model
+Transform: AWS::Serverless-2016-10-31
+Parameters:
+  CloudFrontCertificateArn:
+    Type: "String"
+    Description: "The certificate used for CloudFront deployed in N.Virginia"
+    Default: "novalue" # this is not used for development environment
+  Environment:
+    Type: "String"
+    AllowedValues:
+      - "development"
+      - "testing"
+      - "acceptance"
+      - "production"
+    Default: "development"
+    ConstraintDescription: "Must be one of the values from the list."
+    Description: "Environment in which resources are deployed."
+Resources:
+    HelloWorldFunction:
+        Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+        Properties:
+            CodeUri: ./artifacts/HelloWorld.zip
+            FunctionName: HelloWorldDotNetCore2.0
+            Handler: HelloWorld::HelloWorld.Function::FunctionHandler
+            Runtime: dotnetcore2.0
+            Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+                Variables:
+                    PARAM1: VALUE
+            Events:
+                HelloWorld:
+                    Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+                    Properties:
+                        Path: /hello
+                        Method: get
+            Tags:
+                Name: !Sub "${AWS::StackName}-helloworlddotnetcore2.0"
+                AppGroup: !Sub "${AWS::StackName}"
+                AppRole: "function"
+                Environment: !Ref "Environment"
+Outputs:
+    HelloWorldApi:
+      Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+    HelloWorldFunction:
+      Description: "Hello World Lambda Function ARN"
+      Value: !GetAtt HelloWorldFunction.Arn
+    HelloWorldFunctionIamRole:
+      Description: "Implicit IAM Role created for Hello World function"
+      Value: !GetAtt HelloWorldFunctionRole.Arn
