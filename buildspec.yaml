@@ -11,7 +11,7 @@ phases:
   #     - command
   build:
     commands:
-      - ./build.sh -target=Run
+      - sh build.sh -target=Run
   # post_build:
   #   commands:
   #     - command
