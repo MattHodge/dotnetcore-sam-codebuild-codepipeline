@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  # install:
+  #   commands:
+  #     - command
+  #     - command
+  # pre_build:
+  #   commands:
+  #     - command
+  #     - command
+  build:
+    commands:
+      - ./build.sh -target=Run
+  # post_build:
+  #   commands:
+  #     - command
+  #     - command
+artifacts:
+  files:
+    - artifacts/*
+  discard-paths: yes
+  # base-directory: location
+# cache:
+#   paths:
+#     - path
+#     - path
