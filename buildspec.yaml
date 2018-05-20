@@ -1,8 +1,16 @@
 version: 0.2
 
 phases:
-  # install:
-  #   commands:
+  install:
+    commands:
+        - apt update
+        - apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+        - apt install apt-transport-https -y
+        - echo "deb https://download.mono-project.com/repo/ubuntu stable-trusty main" > /etc/apt/sources.list.d/mono-official-stable.list
+        - apt update
+        - apt-get install mono-complete -y
+        # - pip install --user aws-sam-cli
+        # - echo "export PATH=$PATH:$(python -m site --user-base)/bin" > ~/.bash_aliases # add SAM to Path
   #     - command
   #     - command
   # pre_build:
@@ -11,7 +19,7 @@ phases:
   #     - command
   build:
     commands:
-      - sh build.sh -target=Run
+      - ./build.sh -target=buildrelease
   # post_build:
   #   commands:
   #     - command
