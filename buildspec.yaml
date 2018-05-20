@@ -23,8 +23,8 @@ phases:
       - ./build.sh -target=buildrelease
   post_build:
     commands:
-      - aws cloudformation package --template-file template.yml --s3-bucket matthodge-sam-deployments --output-template-file packaged.yaml --capabilities CAPABILITY_IAM
-      - aws cloudformation deploy --template-file packaged.yaml --stack-name DotNetCoreSAMCodeBuild
+      - aws cloudformation package --template-file template.yml --s3-bucket matthodge-sam-deployments --output-template-file packaged.yaml
+      - aws cloudformation deploy --template-file packaged.yaml --stack-name DotNetCoreSAMCodeBuild --capabilities CAPABILITY_IAM
 artifacts:
   files:
     - artifacts/*
