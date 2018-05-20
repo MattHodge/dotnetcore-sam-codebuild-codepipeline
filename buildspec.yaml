@@ -21,10 +21,9 @@ phases:
     commands:
       - chmod +x build.sh
       - ./build.sh -target=buildrelease
-  # post_build:
-  #   commands:
-  #     - command
-  #     - command
+  post_build:
+    commands:
+      - aws cloudformation package --template-file template.yml --s3-bucket matthodge-sam-deployments --output-template-file artifacts/packaged.yaml
 artifacts:
   files:
     - artifacts/*
