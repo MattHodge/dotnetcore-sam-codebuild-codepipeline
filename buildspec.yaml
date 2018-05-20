@@ -23,10 +23,12 @@ phases:
       - ./build.sh -target=buildrelease
   post_build:
     commands:
-      - aws cloudformation package --template-file template.yml --s3-bucket matthodge-sam-deployments --output-template-file artifacts/packaged.yaml
+      - aws cloudformation package --template-file template.yml --s3-bucket matthodge-sam-deployments --output-template-file packaged.yaml
+      - aws cloudformation deploy --template-file packaged.yaml --stack-name DotNetCoreSAMCodeBuild
 artifacts:
   files:
     - artifacts/*
+    - packaged.yaml
   discard-paths: yes
   # base-directory: location
 # cache:
