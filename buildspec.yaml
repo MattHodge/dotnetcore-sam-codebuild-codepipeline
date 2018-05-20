@@ -19,7 +19,7 @@ phases:
   #     - command
   build:
     commands:
-      - ./build.sh -target=buildrelease
+      - sh build.sh -target=buildrelease
   # post_build:
   #   commands:
   #     - command
